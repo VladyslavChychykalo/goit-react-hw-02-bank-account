@@ -1,0 +1,23 @@
+.balance {
+  text-align: center;
+  margin: 30px;
+  font-size: 16px;
+  font-family: 'Roboto';
+  font-weight: 700;
+  color: #5c6975;
+  margin-right: 23px;
+}
+
+.balance {
+  margin-right: 30px;
+}
+
+.green {
+  color: #b0d389;
+  margin-right: 5px;
+}
+
+.red {
+  color: #ed666a;
+  margin-right: 5px;
+}
