@@ -11,6 +11,20 @@ export default class Dashboard extends Component {
     expenses: 0,
   };
 
+  componentDidMount() {
+    const persistedAccount = localStorage.getItem('account');
+
+    if (persistedAccount) {
+      this.setState(JSON.parse(persistedAccount));
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState !== this.state) {
+      localStorage.setItem('account', JSON.stringify(this.state));
+    }
+  }
+
   handleDeposit = item => {
     const { transactions, balance, income } = this.state;
     this.setState({
