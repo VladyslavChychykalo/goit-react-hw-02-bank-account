@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './Balance.module.css';
 
-export default function Balance({ balance, income, expenses }) {
+const Balance = ({ balance, income, expenses }) => {
   return (
     <section className={styles.balance}>
       <span className={styles.balance}>
@@ -20,10 +20,12 @@ export default function Balance({ balance, income, expenses }) {
       <span>Balance: {balance}$</span>
     </section>
   );
-}
+};
 
 Balance.propTypes = {
   balance: PropTypes.number.isRequired,
   income: PropTypes.number.isRequired,
   expenses: PropTypes.number.isRequired,
 };
+
+export default Balance;

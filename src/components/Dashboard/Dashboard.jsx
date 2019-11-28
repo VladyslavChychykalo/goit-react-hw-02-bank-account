@@ -3,7 +3,7 @@ import Controls from './Controls/Controls';
 import Balance from './Balance/Balance';
 import TransactionHistory from './TransactionHistory/TransactionHistory';
 
-export default class Dashboard extends Component {
+class Dashboard extends Component {
   state = {
     transactions: [],
     balance: 0,
@@ -58,3 +58,5 @@ export default class Dashboard extends Component {
     );
   }
 }
+
+export default Dashboard;

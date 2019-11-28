@@ -5,7 +5,7 @@ import shortid from 'shortid';
 import PropTypes from 'prop-types';
 import styles from './Controls.module.css';
 
-export default class Controls extends Component {
+class Controls extends Component {
   state = {
     amount: '',
   };
@@ -103,3 +103,5 @@ export default class Controls extends Component {
     );
   }
 }
+
+export default Controls;

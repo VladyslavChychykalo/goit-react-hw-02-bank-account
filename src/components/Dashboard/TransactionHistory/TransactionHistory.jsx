@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './TransactionHistory.module.css';
 
-export default function TransactionHistory({ items }) {
+const TransactionHistory = ({ items }) => {
   return (
     <table className={styles.history}>
       <thead>
@@ -23,7 +23,7 @@ export default function TransactionHistory({ items }) {
       </tbody>
     </table>
   );
-}
+};
 
 TransactionHistory.propTypes = {
   items: PropTypes.arrayOf(
@@ -35,3 +35,5 @@ TransactionHistory.propTypes = {
     }).isRequired,
   ).isRequired,
 };
+
+export default TransactionHistory;
