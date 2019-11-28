@@ -26,6 +26,7 @@ class Controls extends Component {
 
   handleItemDeposit = () => {
     const { amount } = this.state;
+    const { onDeposit } = this.props;
     const date = new Date();
     if (Number(amount) <= 0) {
       this.equalZero();
@@ -36,17 +37,19 @@ class Controls extends Component {
         amount: Number(amount),
         date: date.toLocaleString(),
       };
-      this.props.onDeposit(transactionItem);
+      onDeposit(transactionItem);
     }
     this.reset();
   };
 
   handleItemWithdraw = () => {
     const { amount } = this.state;
-    const { balance } = this.props;
+    const { balance, onWithdraw } = this.props;
     const date = new Date();
     if (Number(amount) >= balance) {
       this.noMoney();
+    } else if (Number(amount) <= 0) {
+      this.equalZero();
     } else {
       const transactionItem = {
         id: shortid.generate(),
@@ -54,7 +57,7 @@ class Controls extends Component {
         amount: Number(amount),
         date: date.toLocaleString(),
       };
-      this.props.onWithdraw(transactionItem);
+      onWithdraw(transactionItem);
     }
     this.reset();
   };
