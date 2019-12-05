@@ -1,46 +1,65 @@
 import React, { Component } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import shortid from 'shortid';
 import Controls from './Controls/Controls';
 import Balance from './Balance/Balance';
 import TransactionHistory from './TransactionHistory/TransactionHistory';
+import 'react-toastify/dist/ReactToastify.css';
 
 class Dashboard extends Component {
   state = {
     transactions: [],
     balance: 0,
-    income: 0,
-    expenses: 0,
   };
 
-  handleDeposit = item => {
-    const { transactions, balance, income } = this.state;
-    this.setState({
-      transactions: [...transactions, item],
-      balance: balance + item.amount,
-      income: income + item.amount,
-    });
+  noMoney = () => {
+    toast('На счету недостаточно средств для проведения операции!');
   };
 
-  handleWithdraw = item => {
-    const { transactions, balance, expenses } = this.state;
-    this.setState({
-      transactions: [...transactions, item],
-      balance: balance - item.amount,
-      expenses: expenses + item.amount,
-    });
+  equalZero = () => {
+    toast('Введите сумму для проведения операции!');
+  };
+
+  addBankValue = (amount, target) => {
+    const date = new Date();
+    const { balance } = this.state;
+
+    if (Number(amount) <= 0) {
+      this.equalZero();
+      return;
+    }
+
+    if (target.name === 'withdraw' && Number(amount) >= balance) {
+      this.noMoney();
+      return;
+    }
+
+    const transaction = {
+      id: shortid.generate(),
+      type: target.name,
+      amount,
+      date: date.toLocaleString(),
+    };
+    this.setState(prevState => ({
+      transactions: [...prevState.transactions, transaction],
+      balance:
+        target.name === 'deposit'
+          ? prevState.balance + amount
+          : prevState.balance - amount,
+    }));
   };
 
   render() {
-    const { transactions, balance, income, expenses } = this.state;
+    const { transactions, balance } = this.state;
     return (
-      <div className="dashboard">
-        <Controls
-          onDeposit={this.handleDeposit}
-          onWithdraw={this.handleWithdraw}
-          balance={balance}
-        />
-        <Balance balance={balance} income={income} expenses={expenses} />
-        <TransactionHistory items={transactions} />
-      </div>
+      <>
+        <div className="dashboard">
+          <Controls onTakeValue={this.addBankValue} balance={balance} />
+          <Balance balance={balance} items={transactions} />
+          <TransactionHistory items={transactions} />
+        </div>
+        <ToastContainer autoClose={5000} />
+      </>
     );
   }
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import shortid from 'shortid';
+// import { ToastContainer, toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
+// import shortid from 'shortid';
 import PropTypes from 'prop-types';
 import styles from './Controls.module.css';
 
@@ -11,66 +11,24 @@ class Controls extends Component {
   };
 
   static propTypes = {
-    onDeposit: PropTypes.func.isRequired,
-    onWithdraw: PropTypes.func.isRequired,
-    balance: PropTypes.number.isRequired,
+    onTakeValue: PropTypes.func.isRequired,
   };
 
-  noMoney = () => {
-    toast('На счету недостаточно средств для проведения операции!');
+  handleChange = ({ target }) => {
+    this.setState({
+      [target.name]: Number(target.value),
+    });
   };
 
-  equalZero = () => {
-    toast('Введите сумму для проведения операции!');
-  };
-
-  handleItemDeposit = () => {
+  handleItemValue = target => {
     const { amount } = this.state;
-    const { onDeposit } = this.props;
-    const date = new Date();
-    if (Number(amount) <= 0) {
-      this.equalZero();
-    } else {
-      const transactionItem = {
-        id: shortid.generate(),
-        type: 'deposit',
-        amount: Number(amount),
-        date: date.toLocaleString(),
-      };
-      onDeposit(transactionItem);
-    }
-    this.reset();
-  };
-
-  handleItemWithdraw = () => {
-    const { amount } = this.state;
-    const { balance, onWithdraw } = this.props;
-    const date = new Date();
-    if (Number(amount) >= balance) {
-      this.noMoney();
-    } else if (Number(amount) <= 0) {
-      this.equalZero();
-    } else {
-      const transactionItem = {
-        id: shortid.generate(),
-        type: 'withdraw',
-        amount: Number(amount),
-        date: date.toLocaleString(),
-      };
-      onWithdraw(transactionItem);
-    }
+    this.props.onTakeValue(amount, target);
     this.reset();
   };
 
   reset = () => {
     this.setState({
       amount: '',
-    });
-  };
-
-  handleChange = ({ target }) => {
-    this.setState({
-      [target.name]: target.value,
     });
   };
 
@@ -87,21 +45,22 @@ class Controls extends Component {
             onChange={this.handleChange}
           />
           <button
+            name="deposit"
             className={styles.button}
             type="button"
-            onClick={this.handleItemDeposit}
+            onClick={({ target }) => this.handleItemValue(target)}
           >
             Deposit
           </button>
           <button
+            name="withdraw"
             className={styles.button}
             type="button"
-            onClick={this.handleItemWithdraw}
+            onClick={({ target }) => this.handleItemValue(target)}
           >
             Withdraw
           </button>
         </section>
-        <ToastContainer autoClose={5000} />
       </>
     );
   }
