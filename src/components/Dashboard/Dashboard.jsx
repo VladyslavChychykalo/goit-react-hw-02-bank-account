@@ -12,6 +12,20 @@ class Dashboard extends Component {
     balance: 0,
   };
 
+  componentDidMount() {
+    const persistedAccount = localStorage.getItem('account');
+
+    if (persistedAccount) {
+      this.setState(JSON.parse(persistedAccount));
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState !== this.state) {
+      localStorage.setItem('account', JSON.stringify(this.state));
+    }
+  }
+
   noMoney = () => {
     toast('На счету недостаточно средств для проведения операции!');
   };
