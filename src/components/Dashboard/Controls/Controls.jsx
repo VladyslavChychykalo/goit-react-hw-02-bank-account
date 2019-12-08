@@ -32,33 +32,31 @@ class Controls extends Component {
   render() {
     const { amount } = this.state;
     return (
-      <>
-        <section className={styles.controls}>
-          <input
-            className={styles.input}
-            type="number"
-            name="amount"
-            value={amount}
-            onChange={this.handleChange}
-          />
-          <button
-            name="deposit"
-            className={styles.button}
-            type="button"
-            onClick={({ target }) => this.handleItemValue(target)}
-          >
-            Deposit
-          </button>
-          <button
-            name="withdraw"
-            className={styles.button}
-            type="button"
-            onClick={({ target }) => this.handleItemValue(target)}
-          >
-            Withdraw
-          </button>
-        </section>
-      </>
+      <section className={styles.controls}>
+        <input
+          className={styles.input}
+          type="number"
+          name="amount"
+          value={amount}
+          onChange={this.handleChange}
+        />
+        <button
+          name="deposit"
+          className={styles.button}
+          type="button"
+          onClick={({ target }) => this.handleItemValue(target)}
+        >
+          Deposit
+        </button>
+        <button
+          name="withdraw"
+          className={styles.button}
+          type="button"
+          onClick={({ target }) => this.handleItemValue(target)}
+        >
+          Withdraw
+        </button>
+      </section>
     );
   }
 }

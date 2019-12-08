@@ -2,31 +2,29 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './Balance.module.css';
 
-const Balance = ({ balance, items }) => {
-  return (
-    <section className={styles.balance}>
-      <span className={styles.balance}>
-        <span className={styles.green} role="img" aria-label="ArrowUp">
-          ⬆
-        </span>
-        {items
-          .filter(el => el.type === 'deposit')
-          .reduce((acc, el) => acc + Number(el.amount), 0)}
-        $
+const Balance = ({ balance, items }) => (
+  <section className={styles.balance}>
+    <span className={styles.balance}>
+      <span className={styles.green} role="img" aria-label="ArrowUp">
+        ⬆
       </span>
-      <span className={styles.balance}>
-        <span className={styles.red} role="img" aria-label="ArrowDown">
-          ⬇
-        </span>
-        {items
-          .filter(el => el.type === 'withdraw')
-          .reduce((acc, el) => acc + Number(el.amount), 0)}
-        $
+      {items
+        .filter(el => el.type === 'deposit')
+        .reduce((acc, el) => acc + Number(el.amount), 0)}
+      $
+    </span>
+    <span className={styles.balance}>
+      <span className={styles.red} role="img" aria-label="ArrowDown">
+        ⬇
       </span>
-      <span>Balance: {balance}$</span>
-    </section>
-  );
-};
+      {items
+        .filter(el => el.type === 'withdraw')
+        .reduce((acc, el) => acc + Number(el.amount), 0)}
+      $
+    </span>
+    <span>Balance: {balance}$</span>
+  </section>
+);
 
 Balance.propTypes = {
   balance: PropTypes.number.isRequired,
